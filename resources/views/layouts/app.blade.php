@@ -27,7 +27,8 @@
 
 <div class="flex min-h-screen">
 
-    <!-- SIDEBAR -->
+    {{-- SIDEBAR (HANYA MUNCUL JIKA SUDAH LOGIN & BUKAN LOGIN/REGISTER) --}}
+    @if (Auth::check() && !request()->is('login') && !request()->is('register'))
     <aside class="w-64 bg-slate-900 text-slate-200 flex flex-col">
         <div class="p-6 text-2xl font-bold text-primary">
             ⚽ CourtReserve
@@ -38,7 +39,13 @@
             <a href="/lapangan" class="block px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition">Lapangan</a>
             <a href="/booking" class="block px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition">Booking</a>
             <a href="/profile" class="block px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition">Profil</a>
-            <a href="/admin/users" class="block px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition">Admin</a>
+
+            {{-- MENU ADMIN --}}
+            @if (Auth::user()->email === 'admin@gmail.com')
+                <a href="/admin/users" class="block px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition">
+                    Admin
+                </a>
+            @endif
         </nav>
 
         <div class="p-4 border-t border-slate-700">
@@ -47,14 +54,19 @@
             </a>
         </div>
     </aside>
+    @endif
 
     <!-- MAIN -->
     <main class="flex-1 flex flex-col">
         <!-- TOPBAR -->
+        @if (Auth::check())
         <header class="bg-white shadow px-8 py-4 flex justify-between items-center">
             <h1 class="text-lg font-semibold">Sistem Reservasi Tempat Futsal</h1>
-            <span class="text-sm text-gray-500">User: Clara</span>
+            <span class="text-sm text-gray-500">
+                User: {{ Auth::user()->name ?? Auth::user()->email }}
+            </span>
         </header>
+        @endif
 
         <!-- CONTENT -->
         <section class="p-8 animate-fade-in">

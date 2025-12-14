@@ -42,33 +42,47 @@
     </div>
 
     <!-- RINGKASAN -->
-    <div class="bg-white p-8 rounded-2xl shadow-lg">
-        <h3 class="text-lg font-semibold mb-6">Ringkasan Pembayaran</h3>
+    @php
+    $booking = session('booking');
+@endphp
 
-        <div class="space-y-4 text-slate-600">
-            <div class="flex justify-between">
-                <span>Lapangan</span>
-                <span class="font-medium">Lapangan A</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Tanggal</span>
-                <span class="font-medium">15 Mei 2024</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Durasi</span>
-                <span class="font-medium">1 Jam</span>
-            </div>
-            <hr>
-            <div class="flex justify-between text-lg">
-                <span class="font-semibold">Total</span>
-                <span class="font-bold text-green-600">Rp150.000</span>
-            </div>
+<div class="bg-white p-8 rounded-2xl shadow-lg">
+    <h3 class="text-lg font-semibold mb-6">Ringkasan Pembayaran</h3>
+
+    <div class="space-y-4 text-slate-600">
+        <div class="flex justify-between">
+            <span>Lapangan</span>
+            <span class="font-medium">
+                Lapangan {{ $booking['lapangan'] ?? '-' }}
+            </span>
         </div>
 
-        <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-700">
-            Pastikan detail booking sudah benar sebelum melakukan pembayaran.
+        <div class="flex justify-between">
+            <span>Tanggal</span>
+            <span class="font-medium">
+                {{ $booking['tanggal'] ?? '-' }}
+            </span>
+        </div>
+
+        <div class="flex justify-between">
+            <span>Durasi</span>
+            <span class="font-medium">1 Jam</span>
+        </div>
+
+        <hr>
+
+        <div class="flex justify-between text-lg">
+            <span class="font-semibold">Total</span>
+            <span class="font-bold text-green-600">
+                Rp{{ number_format($booking['harga'] ?? 0, 0, ',', '.') }}
+            </span>
         </div>
     </div>
+
+    <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-700">
+        Pastikan detail booking sudah benar sebelum melakukan pembayaran.
+    </div>
+</div>
 
 </div>
 @endsection

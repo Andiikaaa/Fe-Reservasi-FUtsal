@@ -16,16 +16,16 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
 @foreach([
-    ['kode'=>'A','harga'=>150000,'tipe'=>'Vinyl','status'=>'Tersedia'],
-    ['kode'=>'B','harga'=>120000,'tipe'=>'Rumput Sintetis','status'=>'Tersedia'],
-    ['kode'=>'C','harga'=>180000,'tipe'=>'Premium','status'=>'Full AC'],
+    ['kode'=>'A','harga'=>150000,'tipe'=>'Vinyl','status'=>'Tersedia','url'=>'https://mediaini.com/wp-content/uploads/2021/12/Rekomendasi-Futsal-di-Jakarta-Zeta-Sport-Center-Galeri-by-Website-ourarenasport.jpg'],
+    ['kode'=>'B','harga'=>120000,'tipe'=>'Rumput Sintetis','status'=>'Tersedia','url'=>'https://sn-studio.id/wp-content/uploads/2025/06/lapangan-futsal.png'],
+    ['kode'=>'C','harga'=>180000,'tipe'=>'Premium','status'=>'Full AC','url'=>'https://centroflor.id/wp-content/uploads/2023/09/Lapangan-Futsal-Rumput-Sintetis-Halim.jpg'],
 ] as $l)
 
 <div class="bg-white rounded-2xl shadow-lg hover:-translate-y-2 hover:shadow-xl transition duration-300">
 
     <!-- IMAGE -->
     <div class="relative">
-        <img src="https://picsum.photos/400/220?random={{ $l['kode'] }}" class="rounded-t-2xl w-full">
+        <img src="{{ $l['url'] }}" class="rounded-t-2xl w-full">
         <span class="absolute top-3 right-3 px-3 py-1 bg-green-500 text-white text-xs rounded-full">
             {{ $l['status'] }}
         </span>

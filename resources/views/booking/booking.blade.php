@@ -9,38 +9,39 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
     <!-- FORM -->
-    <div class="bg-white p-8 rounded-2xl shadow-lg">
-        <div class="space-y-5">
+    <form action="/payment" method="POST" class="space-y-5">
+    @csrf
 
-            <div>
-                <label class="block text-sm font-medium text-slate-600 mb-1">Lapangan</label>
-                <select id="lapangan"
-                    class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-green-500">
-                    <option value="A" data-harga="150000">Lapangan A</option>
-                    <option value="B" data-harga="120000">Lapangan B</option>
-                    <option value="C" data-harga="180000">Lapangan C</option>
-                </select>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-slate-600 mb-1">Tanggal</label>
-                <input id="tanggal" type="date"
-                    class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-green-500">
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-slate-600 mb-1">Jam</label>
-                <input id="jam" type="time"
-                    class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-green-500">
-            </div>
-
-            <a href="/payment"
-                class="block w-full text-center bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold transition">
-                Lanjut Pembayaran
-            </a>
-
-        </div>
+    <div>
+        <label>Lapangan</label>
+        <select name="lapangan" id="lapangan"
+            class="w-full px-4 py-3 rounded-lg border">
+            <option value="A" data-harga="150000">Lapangan A</option>
+            <option value="B" data-harga="120000">Lapangan B</option>
+            <option value="C" data-harga="180000">Lapangan C</option>
+        </select>
     </div>
+
+    <div>
+        <label>Tanggal</label>
+        <input name="tanggal" id="tanggal" type="date"
+            class="w-full px-4 py-3 rounded-lg border">
+    </div>
+
+    <div>
+        <label>Jam</label>
+        <input name="jam" id="jam" type="time"
+            class="w-full px-4 py-3 rounded-lg border">
+    </div>
+
+    <input type="hidden" name="harga" id="harga">
+
+    <button type="submit"
+        class="w-full bg-green-500 text-white py-3 rounded-lg font-semibold">
+        Lanjut Pembayaran
+    </button>
+</form>
+
 
     <!-- RINGKASAN -->
     <div class="bg-white p-8 rounded-2xl shadow-lg">
@@ -49,7 +50,7 @@
         <div class="space-y-3 text-slate-600">
             <div class="flex justify-between">
                 <span>Lapangan</span>
-                <span id="r-lapangan" class="font-medium">Lapangan A</span>
+                <span id="r-lapangan" class="font-medium">-</span>
             </div>
             <div class="flex justify-between">
                 <span>Tanggal</span>
@@ -62,7 +63,7 @@
             <hr>
             <div class="flex justify-between text-lg">
                 <span class="font-semibold">Total</span>
-                <span id="r-total" class="font-bold text-green-600">Rp150.000</span>
+                <span id="r-total" class="font-bold text-green-600">-</span>
             </div>
         </div>
 
@@ -74,6 +75,22 @@
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const lapangan = document.getElementById('lapangan');
+    const hargaInput = document.getElementById('harga');
+
+    function setHarga() {
+        const selected = lapangan.options[lapangan.selectedIndex];
+        hargaInput.value = selected.dataset.harga;
+    }
+
+    lapangan.addEventListener('change', setHarga);
+    setHarga(); // ⬅ WAJIB (isi default)
+});
+</script>
+
+
+<script>
 const lapangan = document.getElementById('lapangan');
 const tanggal = document.getElementById('tanggal');
 const jam = document.getElementById('jam');
@@ -81,6 +98,7 @@ const jam = document.getElementById('jam');
 function updateRingkasan() {
     const selected = lapangan.options[lapangan.selectedIndex];
     const harga = selected.dataset.harga;
+    
 
     document.getElementById('r-lapangan').innerText = 'Lapangan ' + selected.value;
     document.getElementById('r-tanggal').innerText = tanggal.value || '-';
@@ -92,4 +110,6 @@ lapangan.addEventListener('change', updateRingkasan);
 tanggal.addEventListener('change', updateRingkasan);
 jam.addEventListener('change', updateRingkasan);
 </script>
+
+
 @endsection

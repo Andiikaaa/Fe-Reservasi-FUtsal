@@ -1,81 +1,44 @@
+@php
+    $disableSidebar = true;
+@endphp
 @extends('layouts.app')
 
 @section('content')
-<!-- TITLE -->
-<div class="mb-8">
-    <h1 class="text-3xl font-bold text-slate-800">Dashboard</h1>
-    <p class="text-slate-500">Ringkasan aktivitas sistem reservasi futsal</p>
-</div>
+<div class="min-h-[80vh] flex items-center justify-center">
+    <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg animate-fade-in">
 
-<!-- STAT CARDS -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-
-    <!-- LAPANGAN -->
-    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition hover:-translate-y-1">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-slate-500">Lapangan Tersedia</p>
-                <h2 class="text-4xl font-bold text-green-500 mt-1">5</h2>
-            </div>
-            <div class="bg-green-100 text-green-600 p-4 rounded-full text-2xl">
-                ⚽
-            </div>
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-slate-800">Masuk Akun</h2>
+            <p class="text-slate-500 text-sm">Masuk untuk mulai reservasi lapangan futsal</p>
         </div>
-    </div>
 
-    <!-- BOOKING -->
-    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition hover:-translate-y-1">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-slate-500">Booking Aktif</p>
-                <h2 class="text-4xl font-bold text-blue-500 mt-1">2</h2>
+        @if ($errors->any())
+            <div class="mb-4 text-red-600 text-sm">
+                {{ $errors->first() }}
             </div>
-            <div class="bg-blue-100 text-blue-600 p-4 rounded-full text-2xl">
-                📅
-            </div>
-        </div>
-    </div>
+        @endif
 
-    <!-- STATUS -->
-    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition hover:-translate-y-1">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-slate-500">Status Pembayaran</p>
-                <h2 class="text-3xl font-bold text-green-600 mt-2">Lunas</h2>
-            </div>
-            <div class="bg-green-100 text-green-600 p-4 rounded-full text-2xl">
-                ✔
-            </div>
-        </div>
-    </div>
+        <form action="/login" method="POST" class="space-y-4">
+            @csrf
 
+            <input type="email" name="email" placeholder="Email"
+                class="w-full px-4 py-3 rounded-lg border border-slate-300">
+
+            <input type="password" name="password" placeholder="Kata Sandi"
+                class="w-full px-4 py-3 rounded-lg border border-slate-300">
+
+
+            <button type="submit"
+                class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold">
+                Login
+            </button>
+        </form>
+
+        <p class="text-center text-sm text-slate-500 mt-4">
+            Belum punya akun?
+            <a href="/register" class="text-green-600 hover:underline">Register</a>
+        </p>
+
+    </div>
 </div>
-
-<!-- CHART -->
-<div class="bg-white p-6 rounded-2xl shadow">
-    <h3 class="text-lg font-semibold mb-4">Grafik Booking Bulanan</h3>
-    <canvas id="bookingChart"></canvas>
-</div>
-
-<script>
-new Chart(document.getElementById('bookingChart'), {
-    type: 'line',
-    data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-        datasets: [{
-            label: 'Jumlah Booking',
-            data: [5, 10, 18, 25, 30, 35],
-            borderColor: '#22c55e',
-            backgroundColor: 'rgba(34,197,94,0.15)',
-            fill: true,
-            tension: 0.4
-        }]
-    },
-    options: {
-        plugins: {
-            legend: { display: false }
-        }
-    }
-});
-</script>
 @endsection

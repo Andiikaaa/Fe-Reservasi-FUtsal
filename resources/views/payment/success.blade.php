@@ -19,25 +19,40 @@
         </p>
 
         <!-- DETAIL -->
-        <div class="bg-slate-50 rounded-xl p-5 text-left mb-6">
-            <div class="flex justify-between text-slate-600 mb-2">
-                <span>Lapangan</span>
-                <span class="font-medium">Lapangan A</span>
-            </div>
-            <div class="flex justify-between text-slate-600 mb-2">
-                <span>Tanggal</span>
-                <span class="font-medium">15 Mei 2024</span>
-            </div>
-            <div class="flex justify-between text-slate-600 mb-2">
-                <span>Durasi</span>
-                <span class="font-medium">1 Jam</span>
-            </div>
-            <hr class="my-3">
-            <div class="flex justify-between text-lg font-semibold">
-                <span>Total</span>
-                <span class="text-green-600">Rp150.000</span>
-            </div>
-        </div>
+        @php
+    $booking = session('booking');
+@endphp
+
+<div class="bg-slate-50 rounded-xl p-5 text-left mb-6">
+    <div class="flex justify-between text-slate-600 mb-2">
+        <span>Lapangan</span>
+        <span class="font-medium">
+            Lapangan {{ $booking['lapangan'] ?? '-' }}
+        </span>
+    </div>
+
+    <div class="flex justify-between text-slate-600 mb-2">
+        <span>Tanggal</span>
+        <span class="font-medium">
+            {{ $booking['tanggal'] ?? '-' }}
+        </span>
+    </div>
+
+    <div class="flex justify-between text-slate-600 mb-2">
+        <span>Durasi</span>
+        <span class="font-medium">1 Jam</span>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="flex justify-between text-lg font-semibold">
+        <span>Total</span>
+        <span class="text-green-600">
+            Rp{{ number_format($booking['harga'] ?? 0, 0, ',', '.') }}
+        </span>
+    </div>
+</div>
+
 
         <!-- ACTION -->
         <a href="/dashboard"
